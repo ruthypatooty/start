@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# startproj
 
-## Getting Started
+A Next.js app using the App Router, Tailwind CSS, Drizzle ORM, Neon, and Docker Compose for local development.
 
-First, run the development server:
+## Requirements
+
+- Node.js 20.9 or newer
+- npm
+- Docker Desktop
+
+## Environment
+
+Create a `.env.local` file in the project root. At minimum, the database connection needs:
+
+```env
+DATABASE_URL="postgresql://user:password@host/database?sslmode=require"
+```
+
+Use `.env.example` as the safe template. Real `.env*` files are ignored by Git.
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the app locally:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Docker Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the app with Docker Compose:
 
-## Learn More
+```bash
+docker compose up --build
+```
 
-To learn more about Next.js, take a look at the following resources:
+The Compose setup automatically loads `.env.local` into the container.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Useful Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-## Deploy on Vercel
+## Current Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The Dockerfile uses Node 20 because Next.js 16 requires Node 20.9 or newer.
+- `next.config.ts` enables standalone output for production Docker builds.
+- Database access is initialized in `src/index.ts` with Drizzle's Neon HTTP driver.
